@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Publications — Timo Metz</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root{--bg:#f5f2ed;--fg:#1a1916;--accent:#8b6c42;--muted:#7a7570;--nav-bg:rgba(245,242,237,0.92);--border:#d9d3c8;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:"Jost",sans-serif;background:var(--bg);color:var(--fg);font-weight:300;}
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);display:flex;justify-content:center;}
+    nav a{font-family:"Jost",sans-serif;font-weight:400;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--fg);text-decoration:none;padding:1.1rem 1.6rem;position:relative;transition:color .2s;}
+    nav a::after{content:"";position:absolute;bottom:0;left:50%;right:50%;height:2px;background:var(--accent);transition:left .25s,right .25s;}
+    nav a:hover{color:var(--accent);}nav a:hover::after{left:1.6rem;right:1.6rem;}
+    nav a.active{color:var(--accent);}nav a.active::after{left:1.6rem;right:1.6rem;}
+
+    main{max-width:860px;margin:0 auto;padding:7rem 2rem 5rem;}
+
+    .page-title{font-family:"Cormorant Garamond",serif;font-weight:300;font-size:clamp(2rem,4vw,3rem);margin-bottom:.5rem;}
+    .page-title span{display:block;width:2.5rem;height:2px;background:var(--accent);margin-top:.5rem;}
+
+    /* Sub-navigation */
+    .sub-nav{
+      display:flex;gap:0;margin:2rem 0 2.5rem;border-bottom:1px solid var(--border);
+    }
+    .sub-nav a{
+      text-decoration:none;color:var(--muted);font-size:.78rem;letter-spacing:.13em;
+      text-transform:uppercase;padding:.8rem 1.4rem;border-bottom:2px solid transparent;
+      transition:color .2s,border-color .2s;
+    }
+    .sub-nav a:hover,.sub-nav a.active{color:var(--accent);border-bottom-color:var(--accent);}
+
+    /* Year filter */
+    .year-filter{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;margin:2rem 0 2.5rem;}
+    .year-filter span{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-right:.5rem;}
+    .year-btn{background:none;border:1px solid var(--border);color:var(--fg);font-family:"Jost",sans-serif;font-size:.76rem;letter-spacing:.1em;padding:.3rem .85rem;border-radius:1px;cursor:pointer;transition:all .2s;}
+    .year-btn:hover,.year-btn.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+
+    /* Year group */
+    .year-group{margin-bottom:2.5rem;}
+    .year-heading{
+      font-family:"Cormorant Garamond",serif;font-weight:400;font-size:1.4rem;
+      color:var(--fg);border-bottom:1px solid var(--border);
+      padding-bottom:.5rem;margin-bottom:1.2rem;
+    }
+
+    /* Publication entry */
+    .pub-item{
+      padding:1.2rem 0;border-bottom:1px solid var(--border);
+      display:grid;grid-template-columns:1fr auto;gap:0 1.5rem;align-items:baseline;
+    }
+    .pub-item:last-child{border-bottom:none;}
+    .pub-ref{font-size:.93rem;line-height:1.7;color:var(--fg);}
+    .pub-ref .pub-title-text{font-weight:400;color:var(--fg);}
+    .pub-ref .pub-authors{color:var(--muted);}
+    .pub-ref .pub-journal{color:var(--accent);font-style:italic;}
+
+    /* Badges */
+    .pub-badges{display:flex;gap:.4rem;flex-shrink:0;}
+    .badge{
+      display:inline-flex;align-items:center;
+      padding:.25rem .7rem;border:1px solid var(--border);
+      color:var(--muted);text-decoration:none;
+      font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;
+      border-radius:1px;transition:all .2s;white-space:nowrap;
+    }
+    .badge:hover{background:var(--accent);color:#fff;border-color:var(--accent);}
+
+    /* Featured / key publications */
+    .section-title{
+      font-family:"Cormorant Garamond",serif;font-weight:400;font-size:1.6rem;
+      color:var(--fg);margin-bottom:.4rem;
+    }
+    .section-rule{width:2.5rem;height:2px;background:var(--accent);margin-bottom:2.5rem;}
+
+    .featured-pub{
+      display:flex;align-items:flex-start;gap:2.5rem;
+      margin-bottom:3rem;padding-bottom:3rem;border-bottom:1px solid var(--border);
+    }
+    .featured-pub:last-of-type{border-bottom:none;padding-bottom:0;margin-bottom:2rem;}
+    .featured-pub.reverse{flex-direction:row-reverse;}
+
+    .pub-cover{flex-shrink:0;width:200px;}
+    .pub-cover img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block;border-radius:2px;border:1px solid var(--border);}
+    .pub-cover-placeholder{
+      width:100%;aspect-ratio:3/4;border-radius:2px;border:1px solid var(--border);
+      display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.8rem;
+      background:linear-gradient(145deg,var(--border),var(--bg));
+    }
+    .pub-cover-placeholder .cover-label{font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);text-align:center;padding:0 1rem;}
+
+    .pub-body{flex:1;padding-top:.2rem;}
+    .pub-meta{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem;}
+    .pub-feat-title{font-family:"Cormorant Garamond",serif;font-weight:400;font-size:1.25rem;line-height:1.35;color:var(--fg);margin-bottom:.4rem;}
+    .pub-feat-authors{font-size:.88rem;color:var(--muted);font-style:italic;margin-bottom:.8rem;}
+    .pub-description{font-size:.9rem;line-height:1.8;color:var(--muted);margin-bottom:.8rem;}
+
+    .abstract-toggle{
+      background:none;border:none;color:var(--accent);font-family:"Jost",sans-serif;
+      font-size:.76rem;letter-spacing:.12em;text-transform:uppercase;
+      cursor:pointer;padding:0;display:inline-flex;align-items:center;gap:.35rem;
+      margin-bottom:.8rem;transition:color .2s;
+    }
+    .abstract-toggle:hover{color:var(--fg);}
+    .abstract-toggle svg{width:12px;height:12px;transition:transform .25s;}
+    .abstract-toggle.open svg{transform:rotate(180deg);}
+    .abstract-box{
+      display:none;font-size:.88rem;line-height:1.8;color:var(--fg);
+      background:rgba(139,108,66,0.06);border-left:2px solid var(--accent);
+      padding:.9rem 1.1rem;margin-bottom:1rem;border-radius:0 2px 2px 0;
+    }
+    .abstract-box.open{display:block;}
+
+    .pub-hidden{display:none !important;}
+
+    .site-footer{border-top:1px solid var(--border);margin-top:3rem;padding:2rem 2rem 3rem;text-align:center;font-size:.78rem;color:var(--muted);letter-spacing:.04em;}
+    .site-footer .footer-inner{max-width:960px;margin:0 auto;}
+
+    @media(max-width:700px){
+      .featured-pub,.featured-pub.reverse{flex-direction:column;gap:1.5rem;}
+      .pub-cover{width:150px;}
+    }
+
+    /* Animations */
+    .fade-in{opacity:0;transform:translateY(18px);transition:opacity .65s ease,transform .65s ease;}
+    .fade-in.visible{opacity:1;transform:none;}
+
+    @media(max-width:600px){
+      nav{overflow-x:auto;justify-content:flex-start;}nav a{padding:.9rem 1rem;font-size:.72rem;}
+      .pub-item{grid-template-columns:1fr;}
+      .pub-badges{margin-top:.5rem;}
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="research.html">Research</a>
+    <a href="publications.html" class="active">Publications</a>
+    <a href="media.html">Media</a>
+    <a href="photography.html">Photography</a>
+    <a href="cv.html">CV</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+
+  <main>
+    <h1 class="page-title">Publications <span></span></h1>
+
+    <!-- Sub-navigation -->
+    <div class="sub-nav" id="subNav">
+      <a href="#highlights" class="active">Highlights</a>
+      <a href="#other">Other Publications</a>
+    </div>
+
+    <!-- Year filter buttons — add/remove years as needed -->
+    <div class="year-filter">
+      <span>Year:</span>
+      <button class="year-btn active" data-year="all">All</button>
+      <button class="year-btn" data-year="2026">2026</button>
+      <button class="year-btn" data-year="2025">2025</button>
+      <button class="year-btn" data-year="2023">2023</button>
+      <button class="year-btn" data-year="2022">2022</button>
+      <button class="year-btn" data-year="2021">2021</button>
+      <button class="year-btn" data-year="2020">2020</button>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         HIGHLIGHTS
+    ══════════════════════════════════════════ -->
+    <section id="highlights">
+    <h2 class="section-title">Highlights</h2>
+    <div class="section-rule"></div>
+
+    <!-- Key Publication 1 — image LEFT -->
+    <article class="featured-pub fade-in" data-year="2026">
+      <div class="pub-cover">
+        <img src="photos/Research_highlights/1.png" alt="Publication cover">
+      </div>
+      <div class="pub-body">
+        <p class="pub-meta">2026 &middot; Nature</p>
+        <h3 class="pub-feat-title">Biodiversity resilience in a tropical rainforest</h3>
+        <p class="pub-feat-authors"><strong>T Metz</strong>, N Farwig, C F Dormann, H M Schaefer, J E Guevara Andino, G Brehm, S Burneo, A Chao, R L Chazdon, R K Colwell, U M Diniz, D A Donoso, M-J Endara, S Erazo, S Escobar, A Falconí-López, H Feldhaar, M Garcia Villamarin, N Grella, K Heer, M Heethoff, A Keller, A R Landim, S D Leonhardt, E Tamargo Lopez, D Marín-Armijos, J Müller, K Neira-Salamea, E L Neuschulz, K M Pedersen, M-O Rödel, M Schleuning, T Schmitt, M Staab, A Tartara, B A Tinoco, C J Tremlett, M Tschapka, S Unsicker, E Villa-Galaviz, N Blüthgen</p>
+        <!-- <p class="pub-description">A short, accessible summary of what this paper is about and why it matters.</p> -->
+        <button class="abstract-toggle" onclick="toggleAbstract(this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          Show abstract
+        </button>
+        <div class="abstract-box">The UN Decade on Ecosystem Restoration aims to stop biodiversity losses. Approximately 60% of tropical forests have already been lost or severely degraded, making restoration essential to achieve conservation goals. Recovery trajectories of trees have been studied intensively, but a comprehensive understanding of biodiversity recovery is lacking. Here we analyse recovery trajectories across trophic levels including 16 taxonomic groups from three kingdoms in a lowland tropical forest by investigating resistance to perturbation, recovery times and return rates to old-growth forest conditions. Abundance and diversity regained more than 90% and composition approximately 75% similarity to old-growth forests within 30 years, but full recovery takes several decades. Mobile animal communities acting as seed dispersers or pollinators had high resistance levels and recovered faster than trees or tree seedlings. Return rates contributed 1–2.5 times more than resistance to the recovery times of species composition. Taxon-specific recovery times could not be explained by simple mechanisms (life-history strategies, trophic level or mobility). We show the enormous potential of protecting naturally recovering secondary forests to stop and reverse biodiversity losses.</div>
+        <div class="pub-badges">
+          <a href="https://doi.org/10.1038/s41586-026-10365-2" target="_blank" rel="noopener" class="badge">Link</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Key Publication 2 — image RIGHT -->
+    <article class="featured-pub reverse fade-in" data-year="2025">
+      <div class="pub-cover">
+        <img src="photos/Research_highlights/2.png" alt="Publication cover">
+      </div>
+      <div class="pub-body">
+        <p class="pub-meta">2025 &middot; Theoretical Ecology</p>
+        <h3 class="pub-feat-title">Species with weak dependence on the mutualistic partner make mutualistic network assembly more predictable</h3>
+        <p class="pub-feat-authors"><strong>T Metz</strong>, B Drossel</p>
+        <!-- <p class="pub-description">A short, accessible summary of what this paper is about and why it matters.</p> -->
+        <button class="abstract-toggle" onclick="toggleAbstract(this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          Show abstract
+        </button>
+        <div class="abstract-box">When local communities are assembled from a regional species pool, stochastic effects, such as differences in species arrival order and timing, can lead to alternative assembly outcomes. Here, we study the predictability of mutualistic network assembly using a trait-based model with explicit population dynamics. We vary size and composition of the species pool, immigration rates, and the strength of demographic noise. Assembly is more predictable when more species in the pool are only weakly dependent on their mutualistic partners or are interaction generalists. The size of the assembled networks increases with the pool size, with the proportion of species that are only weakly dependent on their mutualistic partner and with the immigration rate. The predominant assembly outcome at low immigration rates is a stable configuration where species composition does not change. At higher immigration rates, we observe also cycles (where a sequence of communities repeats periodically) and more complex temporal patterns. Our results are relevant for ecosystem restoration as they show how the composition of the regional species pool and the immigration rate influence the assembly outcome.</div>
+        <div class="pub-badges">
+          <a href="https://doi.org/10.1007/s12080-025-00611-0" class="badge">Link</a>
+          <!--  <a href="#" class="badge">PDF</a> -->
+        </div>
+      </div>
+    </article>
+
+    <!-- Key Publication 3 — image LEFT -->
+    <article class="featured-pub fade-in" data-year="2023">
+      <div class="pub-cover">
+        <img src="photos/Research_highlights/3.png" alt="Publication cover">
+      </div>
+      <div class="pub-body">
+        <p class="pub-meta">2023 &middot; Oikos</p>
+        <h3 class="pub-feat-title">Shifts from non-obligate generalists to obligate specialists in simulations of mutualistic network assembly</h3>
+        <p class="pub-feat-authors"><strong>T Metz</strong>, N Blüthgen, B Drossel</p>
+        <!-- <p class="pub-description">A short, accessible summary of what this paper is about and why it matters.</p> -->
+        <button class="abstract-toggle" onclick="toggleAbstract(this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          Show abstract
+        </button>
+        <div class="abstract-box">Understanding ecosystem recovery after perturbation is crucial for ecosystem conservation. Mutualisms contribute key functions for plants such as pollination and seed dispersal. We modelled the assembly of mutualistic networks based on trait matching between plants and their animal partners that have different degrees of specialization on plant traits. Additionally, we addressed the role of non-obligate animal mutualists, including facultative mutualists or non-resident species that have their main resources outside the target site. Our computer simulations show that non-obligate animals facilitate network assembly during the early stages, furthering colonization by an increase in niche space and reduced competition. While non-obligate and generalist animals provide most of the fitness benefits to plants in the early stages of the assembly, obligate and specialist animals dominate at the end of the assembly. Our results thus demonstrate the combined occurrence of shifts from diet, trait, and habitat generalists to more specialised animals.</div>
+        <div class="pub-badges">
+          <a href="https://doi.org/10.1111/oik.09697" class="badge">Link</a>
+        </div>
+      </div>
+    </article>
+
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         OTHER PUBLICATIONS
+    ══════════════════════════════════════════ -->
+    <section id="other">
+    <h2 class="section-title" style="margin-top:2rem;">Other Publications</h2>
+    <div class="section-rule"></div>
+
+    <!-- ══════════════════════════════════════════
+         2022
+    ══════════════════════════════════════════ -->
+    <div class="year-group fade-in" data-year="2022">
+      <h2 class="year-heading">2022</h2>
+
+      <div class="pub-item">
+        <div class="pub-ref">
+          <span class="pub-title-text">Extracting microplastic decay rates from field data.</span>
+          <span class="pub-authors"> <strong>T Metz</strong>, M Koch, P Lenz</span>
+          <span class="pub-journal"> Scientific reports</span>
+        </div>
+        <div class="pub-badges">
+          <a href="https://doi.org/10.1038/s41598-022-04912-w" class="badge">Link</a>
+        </div>
+      </div>
+
+    </div>
+
+      <!-- ══════════════════════════════════════════
+         2021
+    ══════════════════════════════════════════ -->
+    <div class="year-group fade-in" data-year="2021">
+      <h2 class="year-heading">2021</h2>
+
+      <div class="pub-item">
+        <div class="pub-ref">
+          <span class="pub-title-text"><em>Aethionema arabicum</em> genome annotation using PacBio full-length transcripts provides a valuable resource for seed dormancy and Brassicaceae evolution research.</span>
+          <span class="pub-authors"> N Fernandez‐Pozo, <strong>T Metz</strong>, J O Chandler, L Gramzow, Z Mérai, F Maumus, O Mittelsten Scheid, G Theißen, M E Schranz, G Leubner‐Metzger, S A Rensing</span>
+          <span class="pub-journal"> The Plant Journal</span>
+        </div>
+        <div class="pub-badges">
+          <a href="https://doi.org/10.1111/tpj.15161" class="badge">Link</a>
+        </div>
+      </div>
+
+    </div>
+
+          <!-- ══════════════════════════════════════════
+         2020
+    ══════════════════════════════════════════ -->
+    <div class="year-group fade-in" data-year="2020">
+      <h2 class="year-heading">2020</h2>
+
+      <div class="pub-item">
+        <div class="pub-ref">
+          <span class="pub-title-text">Quantification of microplastics: Which parameters are essential for a reliable inter-studycomparison?</span>
+          <span class="pub-authors"> <strong>T Metz</strong>, M Koch, P Lenz</span>
+          <span class="pub-journal"> Marine pollution bulletin</span>
+        </div>
+        <div class="pub-badges">
+          <a href="https://doi.org/10.1016/j.marpolbul.2020.111330" class="badge">Link</a>
+        </div>
+      </div>
+
+    </div>
+
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">&copy; 2026 Timo Metz. All photographs are copyrighted. All rights reserved. No use, reproduction, distribution, or modification is permitted without prior written permission.</div>
+  </footer>
+
+  <script>
+    // Abstract toggle
+    function toggleAbstract(btn) {
+      const box = btn.nextElementSibling;
+      const open = box.classList.toggle('open');
+      btn.classList.toggle('open', open);
+      btn.lastChild.textContent = open ? ' Hide abstract' : ' Show abstract';
+    }
+
+    // Year filter
+    document.querySelectorAll('.year-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.year-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const year = btn.dataset.year;
+        document.querySelectorAll('.year-group, .featured-pub').forEach(el => {
+          el.classList.toggle('pub-hidden', year !== 'all' && el.dataset.year !== year);
+        });
+      });
+    });
+
+    // Sub-nav active link on scroll
+    const subLinks = document.querySelectorAll('.sub-nav a');
+    const sections = [document.getElementById('highlights'), document.getElementById('other')];
+    window.addEventListener('scroll', () => {
+      let current = sections[0];
+      sections.forEach(s => { if (window.scrollY >= s.offsetTop - 150) current = s; });
+      subLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + current.id));
+    });
+
+    // Fade-in on scroll
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 80);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>

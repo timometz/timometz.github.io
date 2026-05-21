@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Research — Your Name</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root{--bg:#f5f2ed;--fg:#1a1916;--accent:#8b6c42;--muted:#7a7570;--nav-bg:rgba(245,242,237,0.92);--border:#d9d3c8;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:"Jost",sans-serif;background:var(--bg);color:var(--fg);font-weight:300;}
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);display:flex;justify-content:center;}
+    nav a{font-family:"Jost",sans-serif;font-weight:400;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--fg);text-decoration:none;padding:1.1rem 1.6rem;position:relative;transition:color .2s;}
+    nav a::after{content:"";position:absolute;bottom:0;left:50%;right:50%;height:2px;background:var(--accent);transition:left .25s,right .25s;}
+    nav a:hover{color:var(--accent);}nav a:hover::after{left:1.6rem;right:1.6rem;}
+    nav a.active{color:var(--accent);}nav a.active::after{left:1.6rem;right:1.6rem;}
+    main{max-width:860px;margin:0 auto;padding:7rem 2rem 5rem;}
+    h1{font-family:"Cormorant Garamond",serif;font-weight:300;font-size:clamp(2rem,4vw,3rem);margin-bottom:1rem;}
+    h1 span{display:block;width:2.5rem;height:2px;background:var(--accent);margin-top:.5rem;}
+    p{color:var(--muted);line-height:1.85;font-size:.93rem;}
+    .research-block{display:flex;gap:2rem;align-items:center;margin:2.5rem 0;border:1px solid var(--border);padding:1.8rem;border-radius:2px;background:#fff;box-shadow:0 10px 30px rgba(0,0,0,.05);}
+    .research-block.reverse{flex-direction:row-reverse;}
+    .research-media{flex:0 0 280px;}
+    .research-media img{width:100%;height:auto;display:block;border-radius:2px;border:1px solid var(--border);object-fit:cover;}
+    .research-text{flex:1;font-size:.95rem;color:var(--muted);line-height:1.85;}
+    .site-footer{border-top:1px solid var(--border);margin-top:3rem;padding:2rem 2rem 3rem;text-align:center;font-size:.78rem;color:var(--muted);letter-spacing:.04em;}
+    .site-footer .footer-inner{max-width:960px;margin:0 auto;}
+    @media(max-width:700px){.research-block,.research-block.reverse{flex-direction:column;align-items:flex-start;}.research-media{width:100%;}}
+    @media(max-width:600px){nav{overflow-x:auto;justify-content:flex-start;}nav a{padding:.9rem 1rem;font-size:.72rem;}}
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="research.html" class="active">Research</a>
+    <a href="publications.html">Publications</a>
+    <a href="media.html">Media</a>
+    <a href="photography.html">Photography</a>
+    <a href="cv.html">CV</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+  <main>
+    <h1>Research <span></span></h1>
+    <p>I study how ecosystems respond to and recover from disturbances. I use a variety of tools ranging from theoretical models to statistics and empirical data analysis. My two main research projects deal with the recovery of tropical forests after deforestation and the resilience of forests across the western United States to wildfires.</p>
+    <div class="research-block">
+      <div class="research-media">
+        <img src="photos/Research1.jpeg" alt="Research image 1">
+      </div>
+      <div class="research-text">Within the framework of the <a href="https://www.reassembly.de" target="_blank" rel="noopener">Reassembly research unit</a> I study how rainforests recover from deforestation. The study region is located in the Chocó rainforest in Northwestern Ecuador. I am mostly involved in synthesis projects, in which recovery trajectories of diversity, composition and networks of various groups of species are calculated based on empirical observations. For this, I develop theoretical frameworks and use statistical analysis to rigorously assess resilience across a diverse range of taxa. </div>
+    </div>
+
+    <div class="research-block reverse">
+      <div class="research-media">
+        <img src="photos/Research2.JPG" alt="Research image 2">
+      </div>
+      <div class="research-text">Together with <a href="https://www.scienceforconservation.org/our-team/nicholas-hendershot" target="_blank" rel="noopener">Nicholas Hendershot</a> from The Nature Conservancy and <a href="https://www.ioes.ucla.edu/person/chuliang-song/" target="_blank" rel="noopener">Chuliang Song</a> from UCLA I assess how different forest management strategies affect the resilience of forests across the western United States to wildfires. We use data from the Forest Inventory and Analysis (FIA) database and a variety of statistical tools to answer this question across broad spatial scales.</div>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="footer-inner">&copy; 2026 Timo Metz. All photographs are copyrighted. All rights reserved. No use, reproduction, distribution, or modification is permitted without prior written permission.</div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Media — Timo Metz</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root{--bg:#f5f2ed;--fg:#1a1916;--accent:#8b6c42;--muted:#7a7570;--nav-bg:rgba(245,242,237,0.92);--border:#d9d3c8;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:"Jost",sans-serif;background:var(--bg);color:var(--fg);font-weight:300;}
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);display:flex;justify-content:center;}
+    nav a{font-family:"Jost",sans-serif;font-weight:400;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--fg);text-decoration:none;padding:1.1rem 1.6rem;position:relative;transition:color .2s;}
+    nav a::after{content:"";position:absolute;bottom:0;left:50%;right:50%;height:2px;background:var(--accent);transition:left .25s,right .25s;}
+    nav a:hover{color:var(--accent);}nav a:hover::after{left:1.6rem;right:1.6rem;}
+    nav a.active{color:var(--accent);}nav a.active::after{left:1.6rem;right:1.6rem;}
+
+    main{max-width:860px;margin:0 auto;padding:7rem 2rem 5rem;}
+
+    .page-title{font-family:"Cormorant Garamond",serif;font-weight:300;font-size:clamp(2rem,4vw,3rem);margin-bottom:2.5rem;}
+    .page-title span{display:block;width:2.5rem;height:2px;background:var(--accent);margin-top:.5rem;}
+
+    .media-section{margin-bottom:3.5rem;}
+    .media-section h2{
+      font-family:"Cormorant Garamond",serif;font-weight:400;font-size:1.4rem;
+      letter-spacing:.04em;color:var(--fg);
+      border-bottom:1px solid var(--border);padding-bottom:.5rem;margin-bottom:1.5rem;
+    }
+
+    /* Podcast (smaller aspect ratio) */
+    .embed-podcast{padding-bottom:152px;height:0;}
+
+    /* News article cards */
+    .article-card{
+      display:block;text-decoration:none;color:inherit;
+      border:1px solid var(--border);border-radius:4px;
+      padding:1.4rem 1.6rem;margin-bottom:1rem;
+      transition:border-color .2s,box-shadow .2s;
+    }
+    .article-card:hover{border-color:var(--accent);box-shadow:0 4px 16px rgba(0,0,0,.06);}
+    .article-card h3{font-family:"Jost",sans-serif;font-weight:500;font-size:.95rem;margin-bottom:.3rem;}
+    .article-card .article-source{font-size:.8rem;color:var(--accent);letter-spacing:.04em;text-transform:uppercase;margin-bottom:.4rem;}
+    .article-card p{font-size:.88rem;color:var(--muted);line-height:1.7;}
+
+    /* Embedded video / podcast */
+    .embed-wrap{position:relative;width:100%;padding-bottom:56.25%;margin-bottom:1.2rem;border-radius:4px;overflow:hidden;background:#e8e4dd;}
+    .embed-wrap iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0;}
+    .embed-caption{font-size:.88rem;color:var(--muted);line-height:1.7;margin-bottom:2rem;}
+    .embed-caption a{color:var(--accent);text-decoration:none;}
+    .embed-caption a:hover{text-decoration:underline;}
+
+    .site-footer{border-top:1px solid var(--border);margin-top:3rem;padding:2rem 2rem 3rem;text-align:center;font-size:.78rem;color:var(--muted);letter-spacing:.04em;}
+    .site-footer .footer-inner{max-width:960px;margin:0 auto;}
+
+    @media(max-width:600px){
+      nav{overflow-x:auto;justify-content:flex-start;}nav a{padding:.9rem 1rem;font-size:.72rem;}
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="research.html">Research</a>
+    <a href="publications.html">Publications</a>
+    <a href="media.html" class="active">Media</a>
+    <a href="photography.html">Photography</a>
+    <a href="cv.html">CV</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+
+  <main>
+    <h1 class="page-title">Media <span></span></h1>
+
+    <!-- NEWS & PRESS -->
+    <section class="media-section">
+      <h2>News &amp; Press (selection)</h2>
+
+      <a class="article-card" href="https://www.nytimes.com/2026/04/21/climate/rainforests-deforestation-fast-recovery.html" target="_blank" rel="noopener">
+        <div class="article-source">New York Times &middot; 2026</div>
+        <h3>Rainforests Can Bounce Back Much Faster Than Thought, Researchers Say</h3>
+      </a>
+
+      <a class="article-card" href="https://news.mongabay.com/2026/04/how-quickly-do-tropical-forests-recover-faster-than-expected-but-slower-than-it-seems/" target="_blank" rel="noopener">
+        <div class="article-source">Mongabay &middot; 2026</div>
+        <h3>How quickly do tropical forests recover? Faster than expected, but slower than it seems</h3>
+      </a>
+
+      <a class="article-card" href="https://www.tagesschau.de/wissen/klima/studie-erholung-regenwald-flaechen-100.html" target="_blank" rel="noopener">
+        <div class="article-source">Tagesschau &middot; 2026</div>
+        <h3>Neuer Regenwald kann in nur 30 Jahren entstehen</h3>
+      </a>
+
+    </section>
+
+    <!-- PODCAST -->
+    <section class="media-section">
+      <h2>Podcast</h2>
+
+      <a class="article-card" href="https://www.deutschlandfunkkultur.de/neue-regenwald-studie-laesst-hoffen-resilienz-offenbar-hoeher-als-gedacht-100.html" target="_blank" rel="noopener">
+        <div class="article-source">Deutschlandfunk Kultur</div>
+        <h3>Neue Regenwald-Studie l&auml;sst hoffen &mdash; Resilienz offenbar h&ouml;her als gedacht</h3>
+        <p>Radio-Interview</p>
+      </a>
+    </section>
+
+    <!-- VIDEO -->
+    <section class="media-section">
+      <h2>Video</h2>
+
+      <a class="article-card" href="https://www.youtube.com/watch?v=3Btvmr8g934&t=35s" target="_blank" rel="noopener">
+        <div class="article-source">YouTube</div>
+        <h3>The Late Show with Stephen Colbert</h3>
+        <p>Short feature of the study by Stephen Colbert.</p>
+      </a>
+    </section>
+
+  </main>
+  <footer class="site-footer">
+    <div class="footer-inner">&copy; 2026 Timo Metz. All photographs are copyrighted. All rights reserved. No use, reproduction, distribution, or modification is permitted without prior written permission.</div>
+  </footer>
+</body>
+</html>
